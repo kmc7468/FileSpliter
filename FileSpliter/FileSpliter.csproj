@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Splitter.cs" />
+    <Compile Include="Core\AES256.cs" />
+    <Compile Include="Core\Crypto.cs" />
+    <Compile Include="Core\Cryptor.cs" />
+    <Compile Include="Core\Splitter.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
