@@ -15,8 +15,9 @@ namespace FileSpliter
 		static void Main()
 		{
 			Splitter.Division(@"C:\Users\KMC\Desktop\f.txt", 5, @"C:\Users\KMC\Desktop\f", "txt");
-			Cryptor.EncryptFiles(new AES256(), "asdf", @"C:\Users\KMC\Desktop\f", @"C:\Users\KMC\Desktop\ff");
-			Cryptor.DecryptFiles(new AES256(), "asdf", @"C:\Users\KMC\Desktop\ff", @"C:\Users\KMC\Desktop\fff");
+			RSA256.RSA256Key k = RSA256.GenKey();
+			Cryptor.EncryptFiles(new RSA256(), k.PublicKey, @"C:\Users\KMC\Desktop\f", @"C:\Users\KMC\Desktop\ff");
+			Cryptor.DecryptFiles(new RSA256(), k.PrivateKey, @"C:\Users\KMC\Desktop\ff", @"C:\Users\KMC\Desktop\fff");
 			Splitter.Coalescence(@"C:\Users\KMC\Desktop\fff", @"C:\Users\KMC\Desktop\fff.txt");
 
 			Application.EnableVisualStyles();
