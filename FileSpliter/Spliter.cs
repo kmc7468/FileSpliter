@@ -64,6 +64,7 @@ namespace FileSpliter
 					if (i == 0)
 					{
 						bytes.AddRange(BitConverter.GetBytes(j));
+						bytes.AddRange(BitConverter.GetBytes(fileCount));
 						bytes.AddRange(BitConverter.GetBytes(fromPath.Length));
 						bytes.AddRange(Encoding.UTF8.GetBytes(fromPath));
 					}
@@ -141,18 +142,19 @@ namespace FileSpliter
 				Dictionary<int, byte[]> items = new Dictionary<int, byte[]>();
 
 				string from = string.Empty;
+				int count = 0;
 
 				foreach (var it in files)
 				{
 					byte[] b = Convert.FromBase64String(System.IO.File.ReadAllText(it.Trim(), Encoding.Default));
 					byte[] bi = new byte[4] { b[0], b[1], b[2], b[3] };
-					byte[] blen = new byte[4] { b[4], b[5], b[6], b[7] };
+					byte[] blen = new byte[4] { b[8], b[9], b[10], b[11] };
 					int len = 0;
 					len = BitConverter.ToInt32(blen, 0);
 					byte[] fromPath_Bytes = new byte[len];
-					for (int ii = 8; ii < 8 + fromPath_Bytes.Length; ii++)
+					for (int ii = 12; ii < 12 + fromPath_Bytes.Length; ii++)
 					{
-						fromPath_Bytes[ii - 8] = b[ii];
+						fromPath_Bytes[ii - 12] = b[ii];
 					}
 					string fromPath = Encoding.UTF8.GetString(fromPath_Bytes);
 					if (from == string.Empty)
@@ -163,14 +165,27 @@ namespace FileSpliter
 					{
 						if (from != fromPath)
 						{
-							throw new ArgumentException("한 파일에서 분할된 파일만 합칠 수 있습니다.");
+							throw new ArgumentException("한 파일에서 같은 개수로 분할된 파일만 합칠 수 있습니다.");
+						}
+					}
+					byte[] bc = new byte[4] { b[4], b[5], b[6], b[7] };
+					int cout = BitConverter.ToInt32(bc, 0);
+					if (count == 0)
+					{
+						count = cout;
+					}
+					else
+					{
+						if (count != cout)
+						{
+							throw new ArgumentException("한 파일에서 같은 개수로 분할된 파일만 합칠 수 있습니다.");
 						}
 					}
 					int i = BitConverter.ToInt32(bi, 0);
 
 					List<byte> bs = new List<byte>();
 
-					for (int j = 8 + fromPath_Bytes.Length; j < b.Length; j++)
+					for (int j = 12 + fromPath_Bytes.Length; j < b.Length; j++)
 					{
 						bs.Add(b[j]);
 					}
