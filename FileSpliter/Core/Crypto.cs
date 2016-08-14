@@ -8,7 +8,7 @@ namespace FileSpliter
 {
 	public abstract class Crypto
 	{
-		internal abstract void Encrypt(string fromPath, string toPath, string key);
-		internal abstract void Decrypt(string fromPath, string toPath, string key);
+		public abstract void Encrypt(string fromPath, string toPath, string key);
+		public abstract void Decrypt(string fromPath, string toPath, string key);
 	}
 }

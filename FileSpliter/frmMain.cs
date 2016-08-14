@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace FileSpliter
 {
-	internal partial class frmMain : Form
+	public partial class frmMain : Form
 	{
-		public frmMain()
+		internal frmMain()
 		{
 			InitializeComponent();
+
+			PluginManager.MainForm = this;
+			PluginManager.Init();
 
 			FontFamily f;
 
@@ -158,7 +161,7 @@ namespace FileSpliter
 							return;
 						}
 
-						Splitter.Division(txtDivisionUrl.Text, (int)nudDivisionCount.Value, txtDivisionFolder.Text, System.IO.Path.GetExtension(txtDivisionUrl.Text));
+						Splitter.Division(txtDivisionUrl.Text, (int)nudDivisionCount.Value, txtDivisionFolder.Text, System.IO.Path.GetExtension(txtDivisionUrl.Text), false);
 
 						Cryptor.EncryptFiles(new RSA256(), txtEncryptKey.Text, txtDivisionFolder.Text, txtDivisionFolder.Text);
 					}
@@ -170,13 +173,26 @@ namespace FileSpliter
 							return;
 						}
 
-						Splitter.Division(txtDivisionUrl.Text, (int)nudDivisionCount.Value, txtDivisionFolder.Text, System.IO.Path.GetExtension(txtDivisionUrl.Text));
+						Splitter.Division(txtDivisionUrl.Text, (int)nudDivisionCount.Value, txtDivisionFolder.Text, System.IO.Path.GetExtension(txtDivisionUrl.Text), false);
 
 						Cryptor.EncryptFiles(new AES256(), txtEncryptKey.Text, txtDivisionFolder.Text, txtDivisionFolder.Text);
 					}
 					else
 					{
+						foreach (var it in PluginManager.Plugins)
+						{
+							if (it.EncryptDivision(false))
+							{
+								Splitter.Division(txtDivisionUrl.Text, (int)nudDivisionCount.Value, txtDivisionFolder.Text, System.IO.Path.GetExtension(txtDivisionUrl.Text), false);
+								it.EncryptDivision();
+
+								MessageBox.Show("분할이 완료되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+								return;
+							}
+						}
+
 						MessageBox.Show("분할한 파일을 암호화 하기로 결정하셨다면 분할한 파일을 암호화 할 기술을 선택해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
 					}
 				}
 				else
@@ -241,9 +257,9 @@ namespace FileSpliter
 						System.IO.Directory.CreateDirectory(txtCoalescenceFolder.Text + @"\FileSpliterTemp");
 						Cryptor.DecryptFiles(new RSA256(), txtKey.Text, txtCoalescenceFolder.Text, txtCoalescenceFolder.Text + @"\FileSpliterTemp");
 
-						Splitter.Coalescence(txtCoalescenceFolder.Text + @"\FileSpliterTemp", txtCoalescenceUrl.Text);
+						Splitter.Coalescence(txtCoalescenceFolder.Text + @"\FileSpliterTemp", txtCoalescenceUrl.Text, false);
 
-						System.IO.Directory.Delete(txtCoalescenceFolder.Text + @"\FileSpliterTemp");
+						System.IO.Directory.Delete(txtCoalescenceFolder.Text + @"\FileSpliterTemp", true);
 					}
 					else if (rbDecryptAES256.Checked)
 					{
@@ -256,13 +272,29 @@ namespace FileSpliter
 						System.IO.Directory.CreateDirectory(txtCoalescenceFolder.Text + @"\FileSpliterTemp");
 						Cryptor.DecryptFiles(new AES256(), txtKey.Text, txtCoalescenceFolder.Text, txtCoalescenceFolder.Text + @"\FileSpliterTemp");
 
-						Splitter.Coalescence(txtCoalescenceFolder.Text + @"\FileSpliterTemp", txtCoalescenceUrl.Text);
+						Splitter.Coalescence(txtCoalescenceFolder.Text + @"\FileSpliterTemp", txtCoalescenceUrl.Text, false);
 
-						System.IO.Directory.Delete(txtCoalescenceFolder.Text + @"\FileSpliterTemp");
+						System.IO.Directory.Delete(txtCoalescenceFolder.Text + @"\FileSpliterTemp", true);
 					}
 					else
 					{
+						foreach (var it in PluginManager.Plugins)
+						{
+							if (it.DecryptCoalescence(false))
+							{
+								System.IO.Directory.CreateDirectory(txtCoalescenceFolder.Text + @"\FileSpliterTemp");
+								it.DecryptCoalescence();
+
+								Splitter.Coalescence(txtCoalescenceFolder.Text + @"\FileSpliterTemp", txtCoalescenceUrl.Text, false);
+
+								System.IO.Directory.Delete(txtCoalescenceFolder.Text + @"\FileSpliterTemp", true);
+								MessageBox.Show("합체가 완료되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+								return;
+							}
+						}
+
 						MessageBox.Show("분할된 파일을 복호화 하기로 결정하셨다면 분할된 파일을 복호화 할 기술을 선택해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
 					}
 				}
 				else
@@ -340,7 +372,17 @@ namespace FileSpliter
 				}
 				else
 				{
+					foreach (var it in PluginManager.Plugins)
+					{
+						if (it.EncryptFile())
+						{
+							MessageBox.Show("암호화 되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							return;
+						}
+					}
+
 					MessageBox.Show("암호화 할 기술을 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
 				}
 			}
 
@@ -381,7 +423,17 @@ namespace FileSpliter
 				}
 				else
 				{
+					foreach (var it in PluginManager.Plugins)
+					{
+						if (it.DecryptFile())
+						{
+							MessageBox.Show("복호화 되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							return;
+						}
+					}
+
 					MessageBox.Show("복호화 할 기술을 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
 				}
 			}
 

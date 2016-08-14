@@ -91,7 +91,7 @@ namespace FileSpliter
 			}
 		}
 
-		internal override void Encrypt(string fromPath, string toPath, string key)
+		public override void Encrypt(string fromPath, string toPath, string key)
 		{
 			crypto aes = new crypto();
 
@@ -105,7 +105,7 @@ namespace FileSpliter
 			File.WriteAllText(toPath, Convert.ToBase64String(r), Encoding.Default);
 		}
 
-		internal override void Decrypt(string fromPath, string toPath, string key)
+		public override void Decrypt(string fromPath, string toPath, string key)
 		{
 			crypto aes = new crypto();
 

@@ -10,7 +10,7 @@ namespace FileSpliter
 	{
 		public const uint VERSION = 2;
 
-		public static void Division(string fromPath, int fileCount, string toFolder, string toExtension)
+		public static void Division(string fromPath, int fileCount, string toFolder, string toExtension, bool saveBase64 = true)
 		{
 			if (fromPath.Trim() == "")
 			{
@@ -49,11 +49,16 @@ namespace FileSpliter
 				{
 					throw new ArgumentException("파일 크기가 0바이트인 파일은 분할할 수 없습니다.");
 				}
-				else if (file.Length == 1)
+
+				List<byte[]> splits = new List<byte[]>();
+
+				int mod = file.Length % fileCount;
+
+				if (file.Length - mod - 1 == -1)
 				{
 					List<byte[]> saves = new List<byte[]>();
 
-					for(int iii = 0; iii < fileCount - 1; iii++)
+					for (int iii = 0; iii < fileCount - 1; iii++)
 					{
 						List<byte> bs = new List<byte>();
 
@@ -83,16 +88,19 @@ namespace FileSpliter
 
 					foreach (var it in saves)
 					{
-						System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{iiii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
+						if(saveBase64)
+						{
+							System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{iiii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
+						}
+						else
+						{
+							System.IO.File.WriteAllBytes(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{iiii.ToString()}" + "." + toExtension, it);
+						}
 						iiii++;
 					}
 
 					return;
 				}
-
-				List<byte[]> splits = new List<byte[]>();
-
-				int mod = file.Length % fileCount;
 
 				int split = 0;
 
@@ -157,13 +165,20 @@ namespace FileSpliter
 
 				foreach (var it in splits)
 				{
-					System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{ii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
+					if (saveBase64)
+					{
+						System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{ii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
+					}
+					else
+					{
+						System.IO.File.WriteAllBytes(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{ii.ToString()}" + "." + toExtension, it);
+					}
 					ii++;
 				}
 			}
 		}
 
-		public static void Coalescence(string dirPath, string toPath)
+		public static void Coalescence(string dirPath, string toPath, bool readBase64 = true)
 		{
 			List<string> items = new List<string>();
 
@@ -172,10 +187,10 @@ namespace FileSpliter
 				items.Add(it);
 			}
 
-			Coalescence(items, toPath);
+			Coalescence(items, toPath, readBase64);
 		}
 
-		public static void Coalescence(List<string> files, string toPath)
+		public static void Coalescence(List<string> files, string toPath, bool readBase64 = true)
 		{
 			if (toPath.Trim() == "")
 			{
@@ -195,7 +210,7 @@ namespace FileSpliter
 
 				foreach (var it in files)
 				{
-					byte[] b = Convert.FromBase64String(System.IO.File.ReadAllText(it.Trim(), Encoding.Default));
+					byte[] b = readBase64 ? Convert.FromBase64String(System.IO.File.ReadAllText(it.Trim(), Encoding.Default)) : System.IO.File.ReadAllBytes(it.Trim());
 
 					byte[] blen = new byte[4] { b[12], b[13], b[14], b[15] };
 					int len = 0;

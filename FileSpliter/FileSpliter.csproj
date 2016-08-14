@@ -52,6 +52,8 @@
     <Compile Include="Core\AES256.cs" />
     <Compile Include="Core\Crypto.cs" />
     <Compile Include="Core\Cryptor.cs" />
+    <Compile Include="Core\IPlugin.cs" />
+    <Compile Include="Core\PluginManager.cs" />
     <Compile Include="Core\RSA256.cs" />
     <Compile Include="Core\Splitter.cs" />
     <Compile Include="frmMain.cs">

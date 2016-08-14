@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 어셈블리에 대한 일반 정보는 다음 특성 집합을 통해 
 // 제어됩니다. 어셈블리와 관련된 정보를 수정하려면
 // 이러한 특성 값을 변경하세요.
-[assembly: AssemblyTitle("FileSpliter 1.2.0.0")]
-[assembly: AssemblyDescription("File Division/Coalescence/Crypto Program")]
+[assembly: AssemblyTitle("RTCPlugin 1.0.0.0")]
+[assembly: AssemblyDescription("FileSpliter Plugin")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("kmcProject")]
-[assembly: AssemblyProduct("FileSpliter")]
+[assembly: AssemblyProduct("RTCPlugin")]
 [assembly: AssemblyCopyright("© 2016. kmc7468 All rights reserved.")]
 [assembly: AssemblyTrademark("kmcProject")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 이 프로젝트가 COM에 노출되는 경우 다음 GUID는 typelib의 ID를 나타냅니다.
-[assembly: Guid("4dea48bd-ea81-409b-b90c-9aa21f5c9c12")]
+[assembly: Guid("42323c9e-548d-47dd-b55a-99ab89c4e064")]
 
 // 어셈블리의 버전 정보는 다음 네 가지 값으로 구성됩니다.
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // 모든 값을 지정하거나 아래와 같이 '*'를 사용하여 빌드 번호 및 수정 번호가 자동으로 
 // 지정되도록 할 수 있습니다.
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

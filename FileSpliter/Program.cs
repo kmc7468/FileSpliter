@@ -17,6 +17,11 @@ namespace FileSpliter
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new frmMain());
+
+			foreach(var it in PluginManager.Plugins)
+			{
+				it.Shutdown();
+			}
 		}
 	}
 }

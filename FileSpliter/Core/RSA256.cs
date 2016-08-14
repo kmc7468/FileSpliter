@@ -10,7 +10,7 @@ namespace FileSpliter
 {
 	public sealed class RSA256 : Crypto
 	{
-		internal override void Encrypt(string fromPath, string toPath, string key)
+		public override void Encrypt(string fromPath, string toPath, string key)
 		{
 			RSACryptoServiceProvider r = new RSACryptoServiceProvider();
 
@@ -23,7 +23,7 @@ namespace FileSpliter
 			File.WriteAllText(toPath, Convert.ToBase64String(res), Encoding.Default);
         }
 
-		internal override void Decrypt(string fromPath, string toPath, string key)
+		public override void Decrypt(string fromPath, string toPath, string key)
 		{
 			RSACryptoServiceProvider r = new RSACryptoServiceProvider();
 
