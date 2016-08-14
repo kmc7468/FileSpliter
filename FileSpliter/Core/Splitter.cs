@@ -8,7 +8,7 @@ namespace FileSpliter
 {
 	public static class Splitter
 	{
-		public const uint VERSION = 1;
+		public const uint VERSION = 2;
 
 		public static void Division(string fromPath, int fileCount, string toFolder, string toExtension)
 		{
@@ -68,8 +68,9 @@ namespace FileSpliter
 						bytes.AddRange(BitConverter.GetBytes(j));
 						bytes.AddRange(BitConverter.GetBytes(fileCount));
 						bytes.AddRange(BitConverter.GetBytes(VERSION));
-						bytes.AddRange(BitConverter.GetBytes(fromPath.Length));
-						bytes.AddRange(Encoding.UTF8.GetBytes(fromPath));
+						byte[] b = Encoding.UTF8.GetBytes(fromPath);
+                        bytes.AddRange(BitConverter.GetBytes(b.Length));
+						bytes.AddRange(b);
 					}
 
 					bytes.Add(it);
@@ -83,16 +84,11 @@ namespace FileSpliter
 						i = 0;
 						j++;
 					}
-
-					if (j == fileCount)
-					{
-						break;
-					}
 				}
 
 				if (mod != 0)
 				{
-					int start_index = file.Length - mod;
+					int start_index = file.Length - mod - 1;
 
 					List<byte> b = new List<byte>();
 
@@ -212,7 +208,7 @@ namespace FileSpliter
 
 					List<byte> bs = new List<byte>();
 
-					for (int j = 15 + fromPath_Bytes.Length + 1; j < b.Length; j++)
+					for (int j = 16 + fromPath_Bytes.Length; j < b.Length; j++)
 					{
 						bs.Add(b[j]);
 					}
