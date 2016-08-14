@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 어셈블리에 대한 일반 정보는 다음 특성 집합을 통해 
 // 제어됩니다. 어셈블리와 관련된 정보를 수정하려면
 // 이러한 특성 값을 변경하세요.
-[assembly: AssemblyTitle("FileSpliter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("FileSpliter 1.0.0.0")]
+[assembly: AssemblyDescription("File Division/Coalescence/Crypto Program")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("kmcProject")]
 [assembly: AssemblyProduct("FileSpliter")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("© 2016. kmc7468 All rights reserved.")]
+[assembly: AssemblyTrademark("kmcProject")]
 [assembly: AssemblyCulture("")]
 
 // ComVisible을 false로 설정하면 이 어셈블리의 형식이 COM 구성 요소에 

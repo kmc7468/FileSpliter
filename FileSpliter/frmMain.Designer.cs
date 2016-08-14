@@ -1,6 +1,6 @@
 ﻿namespace FileSpliter
 {
-	partial class Form1
+	partial class frmMain
 	{
 		/// <summary>
 		/// 필수 디자이너 변수입니다.
@@ -28,9 +28,20 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.SuspendLayout();
+			// 
+			// frmMain
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Text = "Form1";
+			this.ClientSize = new System.Drawing.Size(640, 480);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
+			this.Name = "frmMain";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "FileSpliter 1.0.0.0";
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
