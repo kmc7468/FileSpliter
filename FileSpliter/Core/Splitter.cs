@@ -32,6 +32,10 @@ namespace FileSpliter
 			{
 				throw new ArgumentException("'toExtension' 매개 변수는 맨 앞 .를 제외하고 1글자 이상이여야 합니다.");
 			}
+			else if (fileCount <= 1)
+			{
+				throw new ArgumentException("'fileCount' 매개 변수는 2 이상이여야 합니다.");
+			}
 			else
 			{
 				if (toExtension[0] == '.')
@@ -40,6 +44,51 @@ namespace FileSpliter
 				}
 
 				byte[] file = System.IO.File.ReadAllBytes(fromPath.Trim());
+
+				if (file.Length == 0)
+				{
+					throw new ArgumentException("파일 크기가 0바이트인 파일은 분할할 수 없습니다.");
+				}
+				else if (file.Length == 1)
+				{
+					List<byte[]> saves = new List<byte[]>();
+
+					for(int iii = 0; iii < fileCount - 1; iii++)
+					{
+						List<byte> bs = new List<byte>();
+
+						bs.AddRange(BitConverter.GetBytes(iii));
+						bs.AddRange(BitConverter.GetBytes(fileCount));
+						bs.AddRange(BitConverter.GetBytes(VERSION));
+						byte[] b = Encoding.UTF8.GetBytes(fromPath);
+						bs.AddRange(BitConverter.GetBytes(b.Length));
+						bs.AddRange(b);
+
+						saves.Add(bs.ToArray());
+					}
+
+					List<byte> bbs = new List<byte>();
+
+					bbs.AddRange(BitConverter.GetBytes(fileCount - 1));
+					bbs.AddRange(BitConverter.GetBytes(fileCount));
+					bbs.AddRange(BitConverter.GetBytes(VERSION));
+					byte[] bb = Encoding.UTF8.GetBytes(fromPath);
+					bbs.AddRange(BitConverter.GetBytes(bb.Length));
+					bbs.AddRange(bb);
+					bbs.AddRange(file);
+
+					saves.Add(bbs.ToArray());
+
+					int iiii = 0;
+
+					foreach (var it in saves)
+					{
+						System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{iiii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
+						iiii++;
+					}
+
+					return;
+				}
 
 				List<byte[]> splits = new List<byte[]>();
 
@@ -69,7 +118,7 @@ namespace FileSpliter
 						bytes.AddRange(BitConverter.GetBytes(fileCount));
 						bytes.AddRange(BitConverter.GetBytes(VERSION));
 						byte[] b = Encoding.UTF8.GetBytes(fromPath);
-                        bytes.AddRange(BitConverter.GetBytes(b.Length));
+						bytes.AddRange(BitConverter.GetBytes(b.Length));
 						bytes.AddRange(b);
 					}
 
@@ -191,13 +240,13 @@ namespace FileSpliter
 						throw new ArgumentException($"합치려는 파일의 버전은 v.{ver.ToString()} 이지만 합칠 수 있는 버전은 v.{VERSION.ToString()} 입니다.");
 					}
 
-					if(v == null)
+					if (v == null)
 					{
 						v = ver;
 					}
 					else
 					{
-						if(v != ver)
+						if (v != ver)
 						{
 							throw new ArgumentException("한 파일에서 같은 개수 및 같은 버전으로 분할된 파일만 합칠 수 있습니다.");
 						}
