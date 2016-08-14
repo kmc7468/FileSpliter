@@ -59,14 +59,22 @@ namespace FileSpliter
 					}
 				}
 			}
-			
+
 			btnDivisionBrowse.Size = new Size(btnDivisionBrowse.Width, txtDivisionUrl.Height);
-			
+
 			btnDivisionFolderBrowse.Size = new Size(btnDivisionFolderBrowse.Width, txtDivisionFolder.Height);
-			
+
 			btnCoalescenceFolderBrowse.Size = new Size(btnCoalescenceFolderBrowse.Width, txtCoalescenceFolder.Height);
-			
+
 			btnCoalescenceBrowse.Size = new Size(btnCoalescenceBrowse.Width, txtCoalescenceUrl.Height);
+
+			btnEncryptFile.Size = new Size(btnEncryptFile.Width, txtEncryptFile.Height);
+
+			btnEncryptTo.Size = new Size(btnEncryptTo.Width, txtEncryptTo.Height);
+
+			btnDecryptFile.Size = new Size(btnDecryptFile.Width, txtDecryptFile.Height);
+
+			btnDecryptTo.Size = new Size(btnDecryptTo.Width, txtDecryptTo.Height);
 		}
 
 		private void btnDivisionBrowse_Click(object sender, EventArgs e)
@@ -189,7 +197,7 @@ namespace FileSpliter
 		{
 			FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-			if(fbd.ShowDialog() == DialogResult.OK)
+			if (fbd.ShowDialog() == DialogResult.OK)
 			{
 				txtCoalescenceFolder.Text = fbd.SelectedPath;
 			}
@@ -199,9 +207,10 @@ namespace FileSpliter
 		{
 			SaveFileDialog sfd = new SaveFileDialog();
 
+			sfd.Title = "합쳐진 파일";
 			sfd.Filter = "모든 파일|*.*";
 
-			if(sfd.ShowDialog() == DialogResult.OK)
+			if (sfd.ShowDialog() == DialogResult.OK)
 			{
 				txtCoalescenceUrl.Text = sfd.FileName;
 			}
@@ -262,6 +271,147 @@ namespace FileSpliter
 				}
 
 				MessageBox.Show("합체가 완료되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void btnEncryptFile_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog ofd = new OpenFileDialog();
+
+			ofd.Title = "암호화 할 파일";
+			ofd.Filter = "모든 파일|*.*|실행 파일|*.exe;*.jar;*.apk|압축 파일|*.zip;*.egg;*.jar;*.7z;*.npk|이미지 파일|*.png;*.jpg;*.jpge;*.bmp;*.gif;*.icon;*.icns|프로그래밍 파일|*.sln;*.pro;*.csproj;*.vbproj;*.vb;*.cs;*.cpp;*.c;*.h;*.java;*.class;*.js;*.obj;*.lnk";
+			ofd.Filter += "|텍스트 파일|*.txt;*.json;*.xml;*.xaml;*.yml;*.yaml|html 파일|*.html;*.htm|라이브러리 파일|*.dll";
+
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				txtEncryptFile.Text = ofd.FileName;
+			}
+		}
+
+		private void btnEncryptTo_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog sfd = new SaveFileDialog();
+
+			sfd.Title = "암호화 된 파일";
+			sfd.Filter = "모든 파일|*.*";
+
+			if (sfd.ShowDialog() == DialogResult.OK)
+			{
+				txtEncryptTo.Text = sfd.FileName;
+			}
+		}
+
+		private void rbEncryptFileRSA256_CheckedChanged(object sender, EventArgs e)
+		{
+			btnRSAKeygen02.Visible = rbEncryptFileRSA256.Checked;
+		}
+
+		private void btnEncryptFileGo_Click(object sender, EventArgs e)
+		{
+			if (txtEncryptFile.Text.Trim() == "" || !System.IO.File.Exists(txtEncryptFile.Text))
+			{
+				MessageBox.Show("암호화 할 파일이 존재하지 않거나 선택되지 않았습니다.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			else if (txtEncryptTo.Text.Trim() == "")
+			{
+				MessageBox.Show("암호화 된 파일 경로를 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			else
+			{
+				if (rbEncryptFileRSA256.Checked)
+				{
+					if (txtEncryptFileKey.Text.Trim() == "")
+					{
+						MessageBox.Show("키를 입력해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+
+					Cryptor.EncryptFile(new RSA256(), txtEncryptFileKey.Text, txtEncryptFile.Text, txtEncryptTo.Text);
+				}
+				else if (rbEncryptFileAES256.Checked)
+				{
+					if (txtEncryptFileKey.Text.Trim() == "")
+					{
+						MessageBox.Show("키를 입력해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+
+					Cryptor.EncryptFile(new AES256(), txtEncryptFileKey.Text, txtEncryptFile.Text, txtEncryptTo.Text);
+				}
+				else
+				{
+					MessageBox.Show("암호화 할 기술을 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+
+			MessageBox.Show("암호화 되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private void btnDecryptGo_Click(object sender, EventArgs e)
+		{
+			if (txtDecryptFile.Text.Trim() == "" || !System.IO.File.Exists(txtDecryptFile.Text))
+			{
+				MessageBox.Show("복호화 할 파일이 존재하지 않거나 선택되지 않았습니다.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			else if (txtDecryptTo.Text.Trim() == "")
+			{
+				MessageBox.Show("복호화 된 파일 경로를 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			else
+			{
+				if (rbDecryptRSA256.Checked)
+				{
+					if (txtDecryptTypeKey.Text.Trim() == "")
+					{
+						MessageBox.Show("키를 입력해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+
+					Cryptor.DecryptFile(new RSA256(), txtDecryptTypeKey.Text, txtDecryptFile.Text, txtDecryptTo.Text);
+				}
+				else if (rbDecryptFileAES256.Checked)
+				{
+					if (txtDecryptTypeKey.Text.Trim() == "")
+					{
+						MessageBox.Show("키를 입력해 주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+
+					Cryptor.DecryptFile(new AES256(), txtDecryptTypeKey.Text, txtDecryptFile.Text, txtDecryptTo.Text);
+				}
+				else
+				{
+					MessageBox.Show("복호화 할 기술을 선택해 주십시오.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+
+			MessageBox.Show("복호화 되었습니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private void btnDecryptFile_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog ofd = new OpenFileDialog();
+
+			ofd.Title = "복호화 할 파일";
+			ofd.Filter = "모든 파일|*.*|실행 파일|*.exe;*.jar;*.apk|압축 파일|*.zip;*.egg;*.jar;*.7z;*.npk|이미지 파일|*.png;*.jpg;*.jpge;*.bmp;*.gif;*.icon;*.icns|프로그래밍 파일|*.sln;*.pro;*.csproj;*.vbproj;*.vb;*.cs;*.cpp;*.c;*.h;*.java;*.class;*.js;*.obj;*.lnk";
+			ofd.Filter += "|텍스트 파일|*.txt;*.json;*.xml;*.xaml;*.yml;*.yaml|html 파일|*.html;*.htm|라이브러리 파일|*.dll";
+
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				txtDecryptFile.Text = ofd.FileName;
+			}
+		}
+
+		private void btnDecryptTo_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog sfd = new SaveFileDialog();
+
+			sfd.Title = "복호화 된 파일";
+			sfd.Filter = "모든 파일|*.*";
+
+			if (sfd.ShowDialog() == DialogResult.OK)
+			{
+				txtDecryptTo.Text = sfd.FileName;
 			}
 		}
 	}

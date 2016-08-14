@@ -61,18 +61,51 @@
 			this.txtCoalescenceFolder = new System.Windows.Forms.TextBox();
 			this.lbCoalescenceFolder = new System.Windows.Forms.Label();
 			this.lbCopyright = new System.Windows.Forms.Label();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.btnEncryptFile = new System.Windows.Forms.Button();
+			this.txtEncryptFile = new System.Windows.Forms.TextBox();
+			this.lbEncryptFile = new System.Windows.Forms.Label();
+			this.btnEncryptTo = new System.Windows.Forms.Button();
+			this.txtEncryptTo = new System.Windows.Forms.TextBox();
+			this.lbEncryptTo = new System.Windows.Forms.Label();
+			this.panEncryptFileEncrypt = new System.Windows.Forms.Panel();
+			this.btnRSAKeygen02 = new System.Windows.Forms.Button();
+			this.txtEncryptFileKey = new System.Windows.Forms.TextBox();
+			this.lbEncryptKeyKey = new System.Windows.Forms.Label();
+			this.rbEncryptFileAES256 = new System.Windows.Forms.RadioButton();
+			this.rbEncryptFileRSA256 = new System.Windows.Forms.RadioButton();
+			this.btnEncryptFileGo = new System.Windows.Forms.Button();
+			this.btnDecryptGo = new System.Windows.Forms.Button();
+			this.panDecryptType = new System.Windows.Forms.Panel();
+			this.txtDecryptTypeKey = new System.Windows.Forms.TextBox();
+			this.lbDecryptTypeKey = new System.Windows.Forms.Label();
+			this.rbDecryptFileAES256 = new System.Windows.Forms.RadioButton();
+			this.rbDecryptFileRSA256 = new System.Windows.Forms.RadioButton();
+			this.btnDecryptTo = new System.Windows.Forms.Button();
+			this.txtDecryptTo = new System.Windows.Forms.TextBox();
+			this.lbDecryptTo = new System.Windows.Forms.Label();
+			this.btnDecryptFile = new System.Windows.Forms.Button();
+			this.txtDecryptFile = new System.Windows.Forms.TextBox();
+			this.lbDecryptFile = new System.Windows.Forms.Label();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.panDivisionEncrypt.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDivisionCount)).BeginInit();
 			this.tabPage2.SuspendLayout();
 			this.panDecrypt.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
+			this.panEncryptFileEncrypt.SuspendLayout();
+			this.panDecryptType.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.tabPage1);
 			this.tabControl.Controls.Add(this.tabPage2);
+			this.tabControl.Controls.Add(this.tabPage3);
+			this.tabControl.Controls.Add(this.tabPage4);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tabControl.Font = new System.Drawing.Font("굴림", 11F);
 			this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -433,6 +466,288 @@
 			this.lbCopyright.TabIndex = 1;
 			this.lbCopyright.Text = "ⓒ 2016. kmc7468 All rights reserved.";
 			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.btnEncryptFileGo);
+			this.tabPage3.Controls.Add(this.panEncryptFileEncrypt);
+			this.tabPage3.Controls.Add(this.btnEncryptTo);
+			this.tabPage3.Controls.Add(this.txtEncryptTo);
+			this.tabPage3.Controls.Add(this.lbEncryptTo);
+			this.tabPage3.Controls.Add(this.btnEncryptFile);
+			this.tabPage3.Controls.Add(this.txtEncryptFile);
+			this.tabPage3.Controls.Add(this.lbEncryptFile);
+			this.tabPage3.Location = new System.Drawing.Point(4, 25);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(632, 427);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "파일 암호화";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.btnDecryptGo);
+			this.tabPage4.Controls.Add(this.panDecryptType);
+			this.tabPage4.Controls.Add(this.btnDecryptTo);
+			this.tabPage4.Controls.Add(this.txtDecryptTo);
+			this.tabPage4.Controls.Add(this.lbDecryptTo);
+			this.tabPage4.Controls.Add(this.btnDecryptFile);
+			this.tabPage4.Controls.Add(this.txtDecryptFile);
+			this.tabPage4.Controls.Add(this.lbDecryptFile);
+			this.tabPage4.Location = new System.Drawing.Point(4, 25);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(632, 427);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "파일 복호화";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// btnEncryptFile
+			// 
+			this.btnEncryptFile.Location = new System.Drawing.Point(595, 35);
+			this.btnEncryptFile.Name = "btnEncryptFile";
+			this.btnEncryptFile.Size = new System.Drawing.Size(31, 24);
+			this.btnEncryptFile.TabIndex = 5;
+			this.btnEncryptFile.Text = "...";
+			this.btnEncryptFile.UseVisualStyleBackColor = true;
+			this.btnEncryptFile.Click += new System.EventHandler(this.btnEncryptFile_Click);
+			// 
+			// txtEncryptFile
+			// 
+			this.txtEncryptFile.BackColor = System.Drawing.Color.White;
+			this.txtEncryptFile.Location = new System.Drawing.Point(11, 35);
+			this.txtEncryptFile.Name = "txtEncryptFile";
+			this.txtEncryptFile.ReadOnly = true;
+			this.txtEncryptFile.Size = new System.Drawing.Size(578, 24);
+			this.txtEncryptFile.TabIndex = 4;
+			// 
+			// lbEncryptFile
+			// 
+			this.lbEncryptFile.AutoSize = true;
+			this.lbEncryptFile.Location = new System.Drawing.Point(8, 12);
+			this.lbEncryptFile.Name = "lbEncryptFile";
+			this.lbEncryptFile.Size = new System.Drawing.Size(107, 15);
+			this.lbEncryptFile.TabIndex = 3;
+			this.lbEncryptFile.Text = "암호화 할 파일";
+			// 
+			// btnEncryptTo
+			// 
+			this.btnEncryptTo.Location = new System.Drawing.Point(595, 95);
+			this.btnEncryptTo.Name = "btnEncryptTo";
+			this.btnEncryptTo.Size = new System.Drawing.Size(31, 24);
+			this.btnEncryptTo.TabIndex = 8;
+			this.btnEncryptTo.Text = "...";
+			this.btnEncryptTo.UseVisualStyleBackColor = true;
+			this.btnEncryptTo.Click += new System.EventHandler(this.btnEncryptTo_Click);
+			// 
+			// txtEncryptTo
+			// 
+			this.txtEncryptTo.BackColor = System.Drawing.Color.White;
+			this.txtEncryptTo.Location = new System.Drawing.Point(11, 95);
+			this.txtEncryptTo.Name = "txtEncryptTo";
+			this.txtEncryptTo.ReadOnly = true;
+			this.txtEncryptTo.Size = new System.Drawing.Size(578, 24);
+			this.txtEncryptTo.TabIndex = 7;
+			// 
+			// lbEncryptTo
+			// 
+			this.lbEncryptTo.AutoSize = true;
+			this.lbEncryptTo.Location = new System.Drawing.Point(8, 72);
+			this.lbEncryptTo.Name = "lbEncryptTo";
+			this.lbEncryptTo.Size = new System.Drawing.Size(107, 15);
+			this.lbEncryptTo.TabIndex = 6;
+			this.lbEncryptTo.Text = "암호화 된 파일";
+			// 
+			// panEncryptFileEncrypt
+			// 
+			this.panEncryptFileEncrypt.BackColor = System.Drawing.Color.LightGray;
+			this.panEncryptFileEncrypt.Controls.Add(this.btnRSAKeygen02);
+			this.panEncryptFileEncrypt.Controls.Add(this.txtEncryptFileKey);
+			this.panEncryptFileEncrypt.Controls.Add(this.lbEncryptKeyKey);
+			this.panEncryptFileEncrypt.Controls.Add(this.rbEncryptFileAES256);
+			this.panEncryptFileEncrypt.Controls.Add(this.rbEncryptFileRSA256);
+			this.panEncryptFileEncrypt.Location = new System.Drawing.Point(11, 141);
+			this.panEncryptFileEncrypt.Name = "panEncryptFileEncrypt";
+			this.panEncryptFileEncrypt.Size = new System.Drawing.Size(613, 142);
+			this.panEncryptFileEncrypt.TabIndex = 10;
+			// 
+			// btnRSAKeygen02
+			// 
+			this.btnRSAKeygen02.Font = new System.Drawing.Font("굴림", 9F);
+			this.btnRSAKeygen02.Location = new System.Drawing.Point(509, 8);
+			this.btnRSAKeygen02.Name = "btnRSAKeygen02";
+			this.btnRSAKeygen02.Size = new System.Drawing.Size(96, 23);
+			this.btnRSAKeygen02.TabIndex = 4;
+			this.btnRSAKeygen02.Text = "키 생성";
+			this.btnRSAKeygen02.UseVisualStyleBackColor = true;
+			this.btnRSAKeygen02.Visible = false;
+			this.btnRSAKeygen02.Click += new System.EventHandler(this.btnEncryptRsaKeyGen_Click);
+			// 
+			// txtEncryptFileKey
+			// 
+			this.txtEncryptFileKey.Location = new System.Drawing.Point(14, 86);
+			this.txtEncryptFileKey.Name = "txtEncryptFileKey";
+			this.txtEncryptFileKey.Size = new System.Drawing.Size(585, 24);
+			this.txtEncryptFileKey.TabIndex = 3;
+			// 
+			// lbEncryptKeyKey
+			// 
+			this.lbEncryptKeyKey.AutoSize = true;
+			this.lbEncryptKeyKey.Location = new System.Drawing.Point(11, 64);
+			this.lbEncryptKeyKey.Name = "lbEncryptKeyKey";
+			this.lbEncryptKeyKey.Size = new System.Drawing.Size(22, 15);
+			this.lbEncryptKeyKey.TabIndex = 2;
+			this.lbEncryptKeyKey.Text = "키";
+			// 
+			// rbEncryptFileAES256
+			// 
+			this.rbEncryptFileAES256.AutoSize = true;
+			this.rbEncryptFileAES256.Location = new System.Drawing.Point(14, 37);
+			this.rbEncryptFileAES256.Name = "rbEncryptFileAES256";
+			this.rbEncryptFileAES256.Size = new System.Drawing.Size(77, 19);
+			this.rbEncryptFileAES256.TabIndex = 1;
+			this.rbEncryptFileAES256.TabStop = true;
+			this.rbEncryptFileAES256.Text = "AES256";
+			this.rbEncryptFileAES256.UseVisualStyleBackColor = true;
+			// 
+			// rbEncryptFileRSA256
+			// 
+			this.rbEncryptFileRSA256.AutoSize = true;
+			this.rbEncryptFileRSA256.Location = new System.Drawing.Point(14, 12);
+			this.rbEncryptFileRSA256.Name = "rbEncryptFileRSA256";
+			this.rbEncryptFileRSA256.Size = new System.Drawing.Size(78, 19);
+			this.rbEncryptFileRSA256.TabIndex = 0;
+			this.rbEncryptFileRSA256.TabStop = true;
+			this.rbEncryptFileRSA256.Text = "RSA256";
+			this.rbEncryptFileRSA256.UseVisualStyleBackColor = true;
+			this.rbEncryptFileRSA256.CheckedChanged += new System.EventHandler(this.rbEncryptFileRSA256_CheckedChanged);
+			// 
+			// btnEncryptFileGo
+			// 
+			this.btnEncryptFileGo.Location = new System.Drawing.Point(476, 378);
+			this.btnEncryptFileGo.Name = "btnEncryptFileGo";
+			this.btnEncryptFileGo.Size = new System.Drawing.Size(148, 43);
+			this.btnEncryptFileGo.TabIndex = 19;
+			this.btnEncryptFileGo.Text = "작업 시작";
+			this.btnEncryptFileGo.UseVisualStyleBackColor = true;
+			this.btnEncryptFileGo.Click += new System.EventHandler(this.btnEncryptFileGo_Click);
+			// 
+			// btnDecryptGo
+			// 
+			this.btnDecryptGo.Location = new System.Drawing.Point(476, 378);
+			this.btnDecryptGo.Name = "btnDecryptGo";
+			this.btnDecryptGo.Size = new System.Drawing.Size(148, 43);
+			this.btnDecryptGo.TabIndex = 27;
+			this.btnDecryptGo.Text = "작업 시작";
+			this.btnDecryptGo.UseVisualStyleBackColor = true;
+			this.btnDecryptGo.Click += new System.EventHandler(this.btnDecryptGo_Click);
+			// 
+			// panDecryptType
+			// 
+			this.panDecryptType.BackColor = System.Drawing.Color.LightGray;
+			this.panDecryptType.Controls.Add(this.txtDecryptTypeKey);
+			this.panDecryptType.Controls.Add(this.lbDecryptTypeKey);
+			this.panDecryptType.Controls.Add(this.rbDecryptFileAES256);
+			this.panDecryptType.Controls.Add(this.rbDecryptFileRSA256);
+			this.panDecryptType.Location = new System.Drawing.Point(11, 141);
+			this.panDecryptType.Name = "panDecryptType";
+			this.panDecryptType.Size = new System.Drawing.Size(613, 142);
+			this.panDecryptType.TabIndex = 26;
+			// 
+			// txtDecryptTypeKey
+			// 
+			this.txtDecryptTypeKey.Location = new System.Drawing.Point(14, 86);
+			this.txtDecryptTypeKey.Name = "txtDecryptTypeKey";
+			this.txtDecryptTypeKey.Size = new System.Drawing.Size(585, 24);
+			this.txtDecryptTypeKey.TabIndex = 3;
+			// 
+			// lbDecryptTypeKey
+			// 
+			this.lbDecryptTypeKey.AutoSize = true;
+			this.lbDecryptTypeKey.Location = new System.Drawing.Point(11, 64);
+			this.lbDecryptTypeKey.Name = "lbDecryptTypeKey";
+			this.lbDecryptTypeKey.Size = new System.Drawing.Size(22, 15);
+			this.lbDecryptTypeKey.TabIndex = 2;
+			this.lbDecryptTypeKey.Text = "키";
+			// 
+			// rbDecryptFileAES256
+			// 
+			this.rbDecryptFileAES256.AutoSize = true;
+			this.rbDecryptFileAES256.Location = new System.Drawing.Point(14, 37);
+			this.rbDecryptFileAES256.Name = "rbDecryptFileAES256";
+			this.rbDecryptFileAES256.Size = new System.Drawing.Size(77, 19);
+			this.rbDecryptFileAES256.TabIndex = 1;
+			this.rbDecryptFileAES256.TabStop = true;
+			this.rbDecryptFileAES256.Text = "AES256";
+			this.rbDecryptFileAES256.UseVisualStyleBackColor = true;
+			// 
+			// rbDecryptFileRSA256
+			// 
+			this.rbDecryptFileRSA256.AutoSize = true;
+			this.rbDecryptFileRSA256.Location = new System.Drawing.Point(14, 12);
+			this.rbDecryptFileRSA256.Name = "rbDecryptFileRSA256";
+			this.rbDecryptFileRSA256.Size = new System.Drawing.Size(78, 19);
+			this.rbDecryptFileRSA256.TabIndex = 0;
+			this.rbDecryptFileRSA256.TabStop = true;
+			this.rbDecryptFileRSA256.Text = "RSA256";
+			this.rbDecryptFileRSA256.UseVisualStyleBackColor = true;
+			// 
+			// btnDecryptTo
+			// 
+			this.btnDecryptTo.Location = new System.Drawing.Point(595, 95);
+			this.btnDecryptTo.Name = "btnDecryptTo";
+			this.btnDecryptTo.Size = new System.Drawing.Size(31, 24);
+			this.btnDecryptTo.TabIndex = 25;
+			this.btnDecryptTo.Text = "...";
+			this.btnDecryptTo.UseVisualStyleBackColor = true;
+			this.btnDecryptTo.Click += new System.EventHandler(this.btnDecryptTo_Click);
+			// 
+			// txtDecryptTo
+			// 
+			this.txtDecryptTo.BackColor = System.Drawing.Color.White;
+			this.txtDecryptTo.Location = new System.Drawing.Point(11, 95);
+			this.txtDecryptTo.Name = "txtDecryptTo";
+			this.txtDecryptTo.ReadOnly = true;
+			this.txtDecryptTo.Size = new System.Drawing.Size(578, 24);
+			this.txtDecryptTo.TabIndex = 24;
+			// 
+			// lbDecryptTo
+			// 
+			this.lbDecryptTo.AutoSize = true;
+			this.lbDecryptTo.Location = new System.Drawing.Point(8, 72);
+			this.lbDecryptTo.Name = "lbDecryptTo";
+			this.lbDecryptTo.Size = new System.Drawing.Size(107, 15);
+			this.lbDecryptTo.TabIndex = 23;
+			this.lbDecryptTo.Text = "복호화 된 파일";
+			// 
+			// btnDecryptFile
+			// 
+			this.btnDecryptFile.Location = new System.Drawing.Point(595, 35);
+			this.btnDecryptFile.Name = "btnDecryptFile";
+			this.btnDecryptFile.Size = new System.Drawing.Size(31, 24);
+			this.btnDecryptFile.TabIndex = 22;
+			this.btnDecryptFile.Text = "...";
+			this.btnDecryptFile.UseVisualStyleBackColor = true;
+			this.btnDecryptFile.Click += new System.EventHandler(this.btnDecryptFile_Click);
+			// 
+			// txtDecryptFile
+			// 
+			this.txtDecryptFile.BackColor = System.Drawing.Color.White;
+			this.txtDecryptFile.Location = new System.Drawing.Point(11, 35);
+			this.txtDecryptFile.Name = "txtDecryptFile";
+			this.txtDecryptFile.ReadOnly = true;
+			this.txtDecryptFile.Size = new System.Drawing.Size(578, 24);
+			this.txtDecryptFile.TabIndex = 21;
+			// 
+			// lbDecryptFile
+			// 
+			this.lbDecryptFile.AutoSize = true;
+			this.lbDecryptFile.Location = new System.Drawing.Point(8, 12);
+			this.lbDecryptFile.Name = "lbDecryptFile";
+			this.lbDecryptFile.Size = new System.Drawing.Size(107, 15);
+			this.lbDecryptFile.TabIndex = 20;
+			this.lbDecryptFile.Text = "복호화 할 파일";
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -444,7 +759,7 @@
 			this.MaximizeBox = false;
 			this.Name = "frmMain";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "FileSpliter 1.0.0.0";
+			this.Text = "FileSpliter 1.1.0.0";
 			this.tabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage1.PerformLayout();
@@ -455,6 +770,14 @@
 			this.tabPage2.PerformLayout();
 			this.panDecrypt.ResumeLayout(false);
 			this.panDecrypt.PerformLayout();
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage3.PerformLayout();
+			this.tabPage4.ResumeLayout(false);
+			this.tabPage4.PerformLayout();
+			this.panEncryptFileEncrypt.ResumeLayout(false);
+			this.panEncryptFileEncrypt.PerformLayout();
+			this.panDecryptType.ResumeLayout(false);
+			this.panDecryptType.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -495,6 +818,33 @@
 		private System.Windows.Forms.Button btnCoalescenceFolderBrowse;
 		private System.Windows.Forms.TextBox txtCoalescenceFolder;
 		private System.Windows.Forms.Label lbCoalescenceFolder;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.Button btnEncryptTo;
+		private System.Windows.Forms.TextBox txtEncryptTo;
+		private System.Windows.Forms.Label lbEncryptTo;
+		private System.Windows.Forms.Button btnEncryptFile;
+		private System.Windows.Forms.TextBox txtEncryptFile;
+		private System.Windows.Forms.Label lbEncryptFile;
+		private System.Windows.Forms.Panel panEncryptFileEncrypt;
+		private System.Windows.Forms.Button btnRSAKeygen02;
+		private System.Windows.Forms.TextBox txtEncryptFileKey;
+		private System.Windows.Forms.Label lbEncryptKeyKey;
+		private System.Windows.Forms.RadioButton rbEncryptFileAES256;
+		private System.Windows.Forms.RadioButton rbEncryptFileRSA256;
+		private System.Windows.Forms.Button btnEncryptFileGo;
+		private System.Windows.Forms.Button btnDecryptGo;
+		private System.Windows.Forms.Panel panDecryptType;
+		private System.Windows.Forms.TextBox txtDecryptTypeKey;
+		private System.Windows.Forms.Label lbDecryptTypeKey;
+		private System.Windows.Forms.RadioButton rbDecryptFileAES256;
+		private System.Windows.Forms.RadioButton rbDecryptFileRSA256;
+		private System.Windows.Forms.Button btnDecryptTo;
+		private System.Windows.Forms.TextBox txtDecryptTo;
+		private System.Windows.Forms.Label lbDecryptTo;
+		private System.Windows.Forms.Button btnDecryptFile;
+		private System.Windows.Forms.TextBox txtDecryptFile;
+		private System.Windows.Forms.Label lbDecryptFile;
 	}
 }
 
