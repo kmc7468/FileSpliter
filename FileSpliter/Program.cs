@@ -14,8 +14,8 @@ namespace FileSpliter
 		[STAThread]
 		static void Main()
 		{
-			Spliter.Division(@"C:\Users\KMC\Desktop\f.txt", 2, @"C:\Users\KMC\Desktop\z", ".txt");
-			Spliter.Coalescence(@"C:\Users\KMC\Desktop\z", @"C:\Users\KMC\Desktop\ff.txt");
+			Splitter.Division(@"C:\Users\KMC\Desktop\f.txt", 1, @"C:\Users\KMC\Desktop\z", ".txt");
+			Splitter.Coalescence(@"C:\Users\KMC\Desktop\z", @"C:\Users\KMC\Desktop\ff.txt");
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

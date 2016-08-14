@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace FileSpliter
 {
-	public static class Spliter
+	public static class Splitter
 	{
+		public const uint VERSION = 1;
+
 		public static void Division(string fromPath, int fileCount, string toFolder, string toExtension)
 		{
 			if (fromPath.Trim() == "")
@@ -65,6 +67,7 @@ namespace FileSpliter
 					{
 						bytes.AddRange(BitConverter.GetBytes(j));
 						bytes.AddRange(BitConverter.GetBytes(fileCount));
+						bytes.AddRange(BitConverter.GetBytes(VERSION));
 						bytes.AddRange(BitConverter.GetBytes(fromPath.Length));
 						bytes.AddRange(Encoding.UTF8.GetBytes(fromPath));
 					}
@@ -143,19 +146,22 @@ namespace FileSpliter
 
 				string from = string.Empty;
 				int count = 0;
+				uint? v = null;
 
 				foreach (var it in files)
 				{
 					byte[] b = Convert.FromBase64String(System.IO.File.ReadAllText(it.Trim(), Encoding.Default));
-					byte[] bi = new byte[4] { b[0], b[1], b[2], b[3] };
-					byte[] blen = new byte[4] { b[8], b[9], b[10], b[11] };
+
+					byte[] blen = new byte[4] { b[12], b[13], b[14], b[15] };
 					int len = 0;
 					len = BitConverter.ToInt32(blen, 0);
+
 					byte[] fromPath_Bytes = new byte[len];
-					for (int ii = 12; ii < 12 + fromPath_Bytes.Length; ii++)
+					for (int ii = 16; ii < 16 + fromPath_Bytes.Length; ii++)
 					{
-						fromPath_Bytes[ii - 12] = b[ii];
+						fromPath_Bytes[ii - 16] = b[ii];
 					}
+
 					string fromPath = Encoding.UTF8.GetString(fromPath_Bytes);
 					if (from == string.Empty)
 					{
@@ -165,7 +171,7 @@ namespace FileSpliter
 					{
 						if (from != fromPath)
 						{
-							throw new ArgumentException("한 파일에서 같은 개수로 분할된 파일만 합칠 수 있습니다.");
+							throw new ArgumentException("한 파일에서 같은 개수 및 같은 버전으로 분할된 파일만 합칠 수 있습니다.");
 						}
 					}
 					byte[] bc = new byte[4] { b[4], b[5], b[6], b[7] };
@@ -178,14 +184,35 @@ namespace FileSpliter
 					{
 						if (count != cout)
 						{
-							throw new ArgumentException("한 파일에서 같은 개수로 분할된 파일만 합칠 수 있습니다.");
+							throw new ArgumentException("한 파일에서 같은 개수 및 같은 버전으로 분할된 파일만 합칠 수 있습니다.");
 						}
 					}
+					byte[] bv = new byte[4] { b[8], b[9], b[10], b[11] };
+					uint ver = BitConverter.ToUInt32(bv, 0);
+
+					if (ver != VERSION)
+					{
+						throw new ArgumentException($"합치려는 파일의 버전은 v.{ver.ToString()} 이지만 합칠 수 있는 버전은 v.{VERSION.ToString()} 입니다.");
+					}
+
+					if(v == null)
+					{
+						v = ver;
+					}
+					else
+					{
+						if(v != ver)
+						{
+							throw new ArgumentException("한 파일에서 같은 개수 및 같은 버전으로 분할된 파일만 합칠 수 있습니다.");
+						}
+					}
+
+					byte[] bi = new byte[4] { b[0], b[1], b[2], b[3] };
 					int i = BitConverter.ToInt32(bi, 0);
 
 					List<byte> bs = new List<byte>();
 
-					for (int j = 12 + fromPath_Bytes.Length; j < b.Length; j++)
+					for (int j = 15 + fromPath_Bytes.Length + 1; j < b.Length; j++)
 					{
 						bs.Add(b[j]);
 					}
