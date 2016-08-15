@@ -145,7 +145,7 @@ namespace FileSpliter
 
 				if (mod != 0)
 				{
-					int start_index = file.Length - mod - 1;
+					int start_index = file.Length - mod;
 
 					List<byte> b = new List<byte>();
 
