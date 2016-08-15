@@ -54,7 +54,18 @@ namespace FileSpliter
 
 				int mod = file.Length % fileCount;
 
-				if (file.Length - mod - 1 == -1)
+				int split = 0;
+
+				if (mod == 0)
+				{
+					split = file.Length / fileCount;
+				}
+				else
+				{
+					split = (file.Length - mod) / fileCount;
+				}
+
+				if(split == 0)
 				{
 					List<byte[]> saves = new List<byte[]>();
 
@@ -88,7 +99,7 @@ namespace FileSpliter
 
 					foreach (var it in saves)
 					{
-						if(saveBase64)
+						if (saveBase64)
 						{
 							System.IO.File.WriteAllText(toFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(fromPath) + $"_{iiii.ToString()}" + "." + toExtension, Convert.ToBase64String(it), Encoding.Default);
 						}
@@ -100,17 +111,6 @@ namespace FileSpliter
 					}
 
 					return;
-				}
-
-				int split = 0;
-
-				if (mod == 0)
-				{
-					split = file.Length / fileCount;
-				}
-				else
-				{
-					split = (file.Length - mod) / fileCount;
 				}
 
 				List<byte> bytes = new List<byte>();

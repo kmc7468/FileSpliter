@@ -759,7 +759,7 @@
 			this.MaximizeBox = false;
 			this.Name = "frmMain";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "FileSpliter 1.2.0.0";
+			this.Text = "FileSpliter 1.2.0.2";
 			this.tabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage1.PerformLayout();
